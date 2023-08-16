@@ -50,7 +50,9 @@
                         <div class="col-md">
                             <label>Conta</label>
                             <select name="conta" class="form-select">
-                                <option value="1">Nubank</option>
+                                {% for conta in contas %}
+                                    <option value="{{conta.id}}">{{conta}}</option>
+                                {% endfor %}
                             </select>
                         </div>
                     </div>

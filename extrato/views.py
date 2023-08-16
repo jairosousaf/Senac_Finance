@@ -33,10 +33,13 @@ def novo_valor(request):
         if tipo == 'E':
             conta.valor += int(valor)
         else:
-            # messages.add_message(request, constants.ERROR, 'Conta não cadastrada')
             conta.valor -= int(valor)
 
         conta.save()        
-
-        messages.add_message(request, constants.SUCCESS, 'Conta cadastrada com sucesso')
+        
+        if tipo == 'E':
+            messages.add_message(request, constants.SUCCESS, 'Entrada realizada com sucesso!')
+        else:
+            messages.add_message(request, constants.SUCCESS, 'Retirada realizada com sucesso!')
+            
         return redirect('/extrato/novo_valor')
