@@ -10,6 +10,7 @@ def home(request):
 
 def gerenciar(request):
     contas = Conta.objects.all()
+    categorias = Categoria.objects.all()
     total_contas = 0
     
     for conta in contas:
