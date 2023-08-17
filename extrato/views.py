@@ -1,3 +1,8 @@
+from io import BytesIO
+import os
+from django.conf import settings
+from django.http import FileResponse
+from weasyprint import HTML
 from perfil.models import Categoria, Conta
 from django.contrib.messages import constants
 from django.contrib import messages
@@ -50,5 +55,29 @@ def view_extrato(request):
     categorias = Categoria.objects.all()
        
     valores = Valores.objects.filter(data__month=datetime.now().month)
- 
+    conta_get = request.GET.get('conta')
+    categoria_get = request.GET.get('categoria')
+    
+    if conta_get:
+        valores = valores.filter(conta__id=conta_get)
+    if categoria_get:
+        valores = valores.filter(categoria__id=categoria_get)
+    
     return render(request, 'view_extrato.html', {'valores': valores, 'contas': contas, 'categorias': categorias})
+
+from django.template.loader import render_to_string
+
+def exportar_pdf(request):
+    valores = Valores.objects.filter(data__month=datetime.now().month)
+    contas = Conta.objects.all()
+    categorias = Categoria.objects.all()
+   
+    path_template = os.path.join(settings.BASE_DIR, 'templates/partials/extrato.html')
+    path_output = BytesIO()
+
+    template_render = render_to_string(path_template, {'valores': valores, 'contas': contas, 'categorias': categorias})
+    HTML(string=template_render).write_pdf(path_output)
+
+    path_output.seek(0)
+   
+    return FileResponse(path_output, filename="extrato.pdf")

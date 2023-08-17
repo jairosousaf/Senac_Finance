@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.messages import constants
 from django.shortcuts import redirect, render
-from perfil.models import Conta
+from perfil.models import Categoria, Conta
 
 # Create your views here.
 
