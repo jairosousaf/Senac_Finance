@@ -26,12 +26,14 @@
                 {% for categoria in categorias %}
                     <tr class="linha">
                         <td>{{categoria}}</td>
-                        <td><input type="number" class="form-control" value="{{categoria.valor_planejamento}}" id="valor-categoria-{{categoria.id}}"></td>
+                        <td><input type="number" class="form-control" value="{{categoria.valor_planejamento}}"></td>
                         <td><button style="width: 100%;" class="botao-secundario">Salvar</button></td>        
                     </tr>
                 {% endfor %}
-           </table>
+
+            </table>
+       
         </div>
     </div>
-    <script src="{% static 'planejamento/js/planejamento.js' %}"></script>
+
 {% endblock %}
